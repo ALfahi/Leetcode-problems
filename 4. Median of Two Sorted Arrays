@@ -1,0 +1,39 @@
+lass Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        # making all elements in one list and sorting it
+        nums1.extend(nums2)
+        nums1.sort()# sorting
+        # finding mid point
+        mid = (len(nums1) - 1) // 2
+        if len(nums1) % 2 == 1:# if it's odd then can easily find middle
+            return nums1[mid]
+        else:# if there is an even amount of elements needs to add the two middle elements and divide by 2
+            return (float(nums1[mid] + nums1[mid + 1]))/ 2
+        #### same method but without any premade python functions
+        #l1 = []
+        #i = 0
+        #j = 0
+       # while i < len(nums1) and j < len(nums2):
+       #     if nums1[i] < nums2[j]:
+        #        l1.append(nums1[i])
+        #        i += 1
+        #    else:
+         #       l1.append(nums2[j])
+        #        j +=1
+        #while i < len(nums1):
+         #   l1.append(nums1[i])
+         #   i += 1
+       # while j < len(nums2):
+         #   l1.append(nums2[j])
+         #   j += 1
+        #mid = (len(l1) - 1) // 2
+       # if len(l1) % 2 == 1:
+        #    return l1[mid]
+       # else:
+         #   return (float(l1[mid] + l1[mid + 1]))/ 2
+        
