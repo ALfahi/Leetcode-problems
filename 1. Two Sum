@@ -1,0 +1,14 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        hash = {}# a hashmap to store the value
+        for i in range(0, len(nums)):
+            complement = target - nums[i]# the complemen + nums[i] = target
+            if complement in hash:# it means that a valid pair was found
+                return [hash[complement], i]# returns the value of the hash[complement] which is just it's index in the list, and also
+                # returns the index of the current value
+            hash[nums[i]] = i# the index of the current value
