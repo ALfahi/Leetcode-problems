@@ -1,0 +1,33 @@
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows == 1:
+            return s
+
+
+        grid = []# a grid to store all of the elements
+        answer = ""
+        for i in range(0, numRows):
+            grid.append([])
+        vertical = 0# keeps track of which array it is currenlty on
+        down = True# whuils this is true it will append characters of s down the list of arrays
+        for i in s:
+            if vertical == 0:# it reached the top of the list of arrays; therefore go down
+                down = True
+            elif vertical == numRows - 1:# it reached the bottom of the list of arrays; therefore go up
+                down = False
+            if down == True:# goes down
+                grid[vertical].append(i)
+                vertical += 1
+            else:# goes up
+                grid[vertical].append(i)
+                vertical -= 1
+        for i in grid:# for every character in every array; append to the answer
+            for j in i:
+                answer += j
+        return answer
+
