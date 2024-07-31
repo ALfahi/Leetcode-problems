@@ -1,0 +1,21 @@
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0:# if it's a negative there's a minus sign; therfore automatically not a palindrome
+            return False
+        l1 = []# to store all digits
+        while x > 0:
+            l1.append(x % 10)# store all digits of x
+            x = x //  10
+        left = 0# use two pointers; it's a palindrome if front and back pointer are the same throughout entire digits
+        right = len(l1) - 1
+        while left <= right:
+            if l1[left] == l1[right]:
+                left +=1
+                right -= 1
+            else:# if pointers are not equal; then it's not a palindrome
+                return False
+        return True
