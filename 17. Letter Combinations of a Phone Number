@@ -1,0 +1,34 @@
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        mapping = { "2": 'abc',
+        "3": 'def',
+        "4": 'ghi',
+        "5": 'jkl',
+        "6": 'mno',
+        "7": 'pqrs',
+        "8": 'tuv',
+        "9": 'wxyz'}
+        answer = []
+        temp = []
+        # using a brute force method to find all combinations
+        for i in digits:
+            left = 0# the pointer for the answer array
+            right = 0# pointyer for the mapping[i] string
+            if len(answer) == 0:# needs to first enter values into answer array for algorithm to work
+                for j in mapping[i]:
+                    answer.append(j)
+            else:
+                while left < len(answer):# iterating through the entire answer array; adding every elemenrt in answer array to the mapping[i] string to find every possible combination
+                    while right < len(mapping[i]):
+                        temp.append(answer[left] + mapping[i][right])
+                        right += 1
+                    left += 1
+                    right = 0
+                answer = temp
+                temp = []
+        return answer
+
