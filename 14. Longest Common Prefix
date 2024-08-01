@@ -1,0 +1,16 @@
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        # inistialise answer
+        answer = ""
+        strs.sort()# it's in alphabetical order;
+        for i in range(0, min(len(strs[0]), len(strs[-1]))):# take the smaller length to avoid out of bounds error
+            if strs[0][i] ==strs[-1][i]:# since it's sorted, if the common charcaters between the first word and the last word are equal
+                                        # then it's equal for all words in between
+                answer += strs[0][i]# add it to the answer string
+            else:
+                return answer#  if it found a mismatch; then the current answer is the longest common prevfix; now return
+        return answer# in case if end of word has been reached
