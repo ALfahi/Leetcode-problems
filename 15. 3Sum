@@ -1,0 +1,40 @@
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()# sort the given array
+        answer = []
+        k = 0
+        while k < len(nums) -2 and nums[k] <= 0:# can just lock one of the digits, and perform a two sum with the other two elements
+                                                # if all values are prositive then impossible to get zero, therefore one element alwyas needs to be negatvie or all elements be 0
+            start = k + 1# start is always the value right after  kth element
+            pairs = self.twosum(nums, start, -1 * nums[k])# we want the target to be the negative value of k so it can equal zero
+            for pair in pairs:
+                if pair not in answer:# to stop duplicates
+                    answer.append(pair)
+            k +=1
+        return answer# return list of lists
+        
+
+    # normal two sum with pointer method
+    def twosum(self, nums, start, target):
+        i = start
+        j = len(nums) - 1
+        temp = []
+        while i < j:
+            if nums[i] + nums[j] < target:
+                i +=1
+            elif nums[i] + nums[j] > target:
+                j -= 1
+            else:
+                temp.append([nums[start - 1], nums[i], nums[j]])
+                while i < j and nums[i] == nums[i + 1]:
+                    i += 1
+                while i < j and nums[j] == nums[j - 1]:
+                    j -= 1
+                i += 1
+                j -= 1
+        return temp
+        
