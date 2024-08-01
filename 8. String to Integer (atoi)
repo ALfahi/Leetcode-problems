@@ -1,0 +1,37 @@
+class Solution(object):
+    def myAtoi(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        empty = True# flag for  leadingwhitespaces
+        sign = 1
+        answer = 0
+        for i in s:
+            ### code to find first valid character
+            if empty == True:# while the flag is still on; continue along the characters of s until all leading whitespaces have been covered
+                if i == " ":
+                    continue# go to next character of ot's a whites space
+                elif i == "-":
+                    sign = -1# it's a negative
+                    empty = False# all leading whitespaces have been covered
+                elif i == "+":
+                    empty = False
+                    continue
+                elif i.isdigit():
+                    empty = False# 
+                    answer += int(i)
+                else:# idf first character is not a digit then the answer is 0
+                    return 0
+            # code to find rest of characters 
+            else:
+                if i.isdigit():# keep going until a non digit charctaer has been found
+                    answer = (answer * 10) + int(i)# every digit is multipled by one more ten
+                else:# when a non digit is found break away from entire loop and work with current answer
+                    break
+        answer = answer * sign# in case if it's negative
+        if answer < -2**31:
+            answer = -2**31
+        if answer > 2**31 - 1:
+            answer = 2**31 - 1
+        return answer
