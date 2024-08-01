@@ -1,0 +1,42 @@
+class Solution(object):
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        answer = ""
+        # a dictionary to map all the numbers to the symbols
+        Map = {1: "I",
+        5: "V",
+        10 : "X",
+        50 : "L",
+        100: "C",
+        500: "D",
+        1000: "M",
+        4: "IV",
+        9: "IX",
+        40: "XL",
+        90: "XC",
+        400: "CD",
+        900: "CM"}
+
+        temp = str(num)# for this algorithm we will be using the string 
+        power = len(temp) - 1# e.g if length of string is 2 then number is in range of 10 - 99
+        for i in temp:
+            if i == "4" or i == "9":# the outliers are the digits 4 and 9
+                answer += Map[int(i) *(10 ** power)]# gets the correct multiple version of the symbol depending on what digit it's on
+            else:
+                if int(i) >= 5:# for every value greater tahn 5; can just write it as an addition of 5 and up to 3 digits of 111( 9 is an outlier)
+                    value = int(i) - 5
+                    answer += Map[5 *(10 ** power)]# gets the correct mutliple of 5
+                    while value > 0:
+                        answer += str(Map[1 *(10 ** power)])# gets correct mutliple of 1
+                        value -= 1
+                else:
+                    value = int(i)# can just write it as i digits of 111s (4 is an outlier)
+                    while value > 0:
+                        answer += str(Map[1 *(10 ** power)])# gets correct mutliple of 1
+                        value -= 1
+            power -= 1# moving from lef to right of the number, therefore when going right, the pwoer of 10 decreases by one each time
+                    
+        return answer
