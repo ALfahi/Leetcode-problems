@@ -1,0 +1,29 @@
+class Solution(object):
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        ##### iterative approach #####
+        if n == 1:
+            return "1"
+        temp = "11"
+        counter = 2
+        while counter < n:
+            answer = ""
+            length = 1
+            for i in range(0, len(temp) - 1):
+                if temp[i] == temp[i + 1]:# if the next elemenr is the same; then jusr increment
+                    length += 1
+                else:
+                    answer += str(length) + temp[i]# if it's not the same then concatenate the repeated
+                    # occurence of the current value as well as the value itself
+                    length = 1# reset the length varibale
+            answer += str(length) + temp[len(temp) - 1]# no matter if final value is same or different to the vlaue before it
+            # just concatenate the final value to the answer as well as it's current legnth
+            # if not the same then it will concatente 1 folllowed by final vlaue
+            # if it's the same then; the length was incremented before, therefore the length is correct.
+            temp = answer
+            counter += 1
+        return temp
+        
