@@ -1,0 +1,41 @@
+class Solution(object):
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        def binary(bottom, top):
+            middle = (bottom + top) // 2
+            #edge cases
+            if nums[bottom] == target:
+                return bottom
+            if nums[middle] == target:
+                return middle
+
+            # possible ways the sublists/  list could be orderd in
+            if nums[middle] < nums[bottom] or nums[len(nums) - 1] < nums[bottom]:# if bottom is not minimum; a roation has occured
+                if nums[bottom] < target and target < nums[middle]:# for examle bottom < target < middle; therefore in this sublist
+                    return binary(bottom + 1, middle - 1)# in left list
+                elif nums[bottom] > target and nums[middle] > target and nums[middle] < nums[bottom]:
+                    #if both are greater than target, but bottom > middle; it means that there is a roation and the actual minimum value of list( beofre roation) lies
+                    # in between these two pointers, whihc should inlcuse any value below the middle
+                    return binary(bottom + 1, middle - 1)# in left list
+                elif nums[bottom] < target and nums[middle] < target and nums[bottom] > nums[middle]:
+                    #if both are smaller than the target, but the bottom is greater than middle, a roation has occured, and the values after the bottom will get bigger until it reaches a certain point, when it reaches the actual startting value of list( without any roation); therefore values smaller and bigger than target lie here
+                    return binary(bottom + 1, middle - 1)
+                else:# has to be right side
+                    return binary(middle + 1, len(nums) - 1)
+            else:# the sublist is sorted acsendingly; can now just do a normal binary search
+                while bottom <= top:
+                    middle = (bottom + top) // 2
+                    if nums[middle] > target:
+                        top = middle - 1
+                    elif nums[middle] < target:
+                        bottom = middle + 1
+                    else:
+                        return middle
+                return -1
+        
+
+        return binary(0, len (nums) - 1)
