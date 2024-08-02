@@ -1,0 +1,23 @@
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        if len(lists) == 0:#  in case if there is no linked lists in the arraty; return early
+            return None
+        list1 = []
+        # iterate through the array of linked lists and add all values to a normal array
+        for i in range(0, len(lists)):
+            while lists[i] != None:# for every linked list add all of it's values the array
+                list1.append(lists[i].val)# add value to list
+                lists[i] =  lists[i].next# go onto the next value of the current linked list#
+
+        list1.sort()# sort it
+        # create a new linked list and add all of the elements of the array into the new linked list and return it
+        head = ListNode()
+        current = head
+        for i in list1:
+            current.next = ListNode(i)
+            current = current.next
+        return head.next
