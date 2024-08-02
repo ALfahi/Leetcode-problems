@@ -1,0 +1,15 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # first element should stay where it's at no matter whatt. therefore replace should point to second element
+        replace = 1# number of distinct elements in array; since lens(nums) >= 1; minimum value to return is 1
+        for i in range(1, len(nums)):
+            # since we do not care about the duplicates and only wnat the distinct elemnts to be in front of list;
+            # tjhe replace variable makes it so that distinct elements in front of list
+            if nums[i] != nums[i-1]:#  if the elemnts are not the same
+                nums[replace] = nums[i] # then replace the element of nums indexed at replace with the current element
+                replace +=1# increment it
+        return replace# the number of distinct elemnts
