@@ -1,0 +1,23 @@
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        j = 0
+        index = []
+        for i in range(0, len(haystack)):
+            if haystack[i] == needle[0]:# append all of the indexes where the needle may be in the haystack( e.g when the two starting characters are the same)
+                index.append(i)
+        for k in index:# for every startting point:
+            i = k
+            while i < len(haystack) and j < len(needle) and haystack[i] == needle[j]:# if the two characters are equal from needle and haystack
+            # move onot the next two characters until all of the characters of the needle string has been matched
+                i +=1
+                j +=1
+            if j == len(needle):# the needle has been found in the haystack
+                return k# return it's starting position
+            j = 0# e.g if the character's dont match anymore; it means that its not correct so go to next starting point
+            # and  make j point to first character of the needle again
+        return -1 # in case the needle isn't in the haystack
