@@ -1,0 +1,16 @@
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        answer = {}# using a dictionary as more efficient than arrays
+        for i in strs:
+            key =  "".join(sorted(i))# rearranges the word alphabetically (so it's letters are in alphabetical order)
+            # note the actual words in the string doesnt change
+            if key not in answer:# if the key doesn't exist
+                answer[key] = [i]# make a new key, with initial value of [word]
+            else:# if key does exist
+                answer[key].append(i)# append it to the existing list
+
+        return answer.values()# just returns all values
