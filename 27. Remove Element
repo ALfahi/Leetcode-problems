@@ -1,0 +1,10 @@
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        while val in nums:# as value to be deleted is still in array; keep deleting it until it's no longer in array
+            nums.remove(val)
+        return len(nums)
