@@ -1,0 +1,15 @@
+class Solution(object):
+    def lengthOfLastWord(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        length = len(s)
+        while s[length - 1] == " ":# get length of sentence but without all whitespaces
+            length -=1
+        indexes = [-1]
+        for i in range(0, length):# keep track of indexes of all the spaces
+            if s[i] == " ":
+                indexes.append(i)
+        return (length - indexes[-1] - 1 )# length of last word is equal to the current length of sentence without anty whitespace minus
+        # the index of the last occcurence of a whitespace in the string - 1
