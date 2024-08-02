@@ -1,0 +1,35 @@
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # this is a binary search problem
+        def start(left, right):# finding the left index
+            while left < right:
+                mid = (left + right) // 2
+                if nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid
+            return left
+
+        def end(left, right):# finding right index
+            while left < right:
+                mid = (left + right + 1) // 2  # Make mid biased to the right
+                if nums[mid] > target:
+                    right = mid - 1
+                else:
+                    left = mid
+            return right
+
+        if not nums:# won't work when list is empty
+            return [-1, -1]
+
+        startindex = start(0, len(nums) - 1)
+        if nums[startindex] != target:# since this has the first occurence of the target; if it's not found then there is no target in the list
+            return [-1, -1]
+        endindex = end(startindex, len(nums) - 1)
+        
+        return [startindex, endindex]
