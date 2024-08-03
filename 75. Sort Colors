@@ -1,0 +1,22 @@
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        # since we know all of the possible numbers, can use a hash and loop through list 2 times to update the list; O(N)
+        # set up hash
+        hash = {0: [],
+                1: [],
+                2: []}
+        # loop through list once to put all vlaues in hash in order
+        for i in nums:
+            hash[i].append(i)
+
+        # loop thorugh list one more time to update all vlaues in the list
+        i = 0
+        for key in hash:
+            for value in hash[key]:
+                nums[i] = value
+                i += 1
+        # therferore algorithm is 0(3N)
