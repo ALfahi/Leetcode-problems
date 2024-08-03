@@ -1,0 +1,29 @@
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        # code works by putting all of the cells essentially into just one big row and calulating the midpoint from there
+        y = len(matrix)
+        x = len(matrix[0])
+        top = (x * y) - 1# last value in 2-d matrix from top to bottom
+        bottom = 0# firsrt value in 2-d matrix
+        
+        # binary search
+        while bottom <= top:
+            mid = (top + bottom) // 2
+
+            # finding the row and column of where the midpoint is
+            row = (mid // x) 
+            col = (mid % x)
+            if matrix[row][col] < target:
+                bottom = mid + 1
+            elif matrix[row][col] > target:
+                top = mid - 1
+            else:# the target is inside the 2-d matrix
+                return True
+        return False# target not inside 2-d matrix
+
+    
