@@ -1,0 +1,21 @@
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        open = [ "(", "[", "{"]# the possible 'open' characters
+        pairs = ["()", "[]", "{}"]# the possible valid combinations 
+        stack = []# use a stack to solve the problem
+        for i in s:
+            if i in open:
+                stack.append(i)
+            else:# it's a close character
+                if len(stack) != 0:# can't pop out of an empty stack
+                    valid = stack.pop(-1) + i# this will create a pair
+                    if valid not in pairs:# if it's a mismatch e.g {)
+                        return False
+                else:# stacknis empty which means that there is no open brackets left to match with the close bracket
+                    return False
+        return len(stack) == 0# if stack is not empty it means that there is still open characters left which has not been closed; therefore invalid
