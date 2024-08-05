@@ -1,0 +1,29 @@
+class Solution(object):
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        nums.sort()
+        r = 9999999    #  give it a really high number to intisilise it
+        # minimise difference to find the closest 3 sum
+        # crete left and right pointers
+        for i in range(0, len(nums) - 2):
+            # skip duplicates values, since the sum will be the same for each set of numbers where the first elements are the same(slightly more efficient)
+            if i > 0 and nums[i] == nums[i- 1]:
+                continue
+            left = i + 1
+            right = len(nums) - 1
+            while left < right:
+                sum = nums[i] + nums[right] + nums[left]
+                if sum > target:# the sum was too big; therefore to make it closer; add smaller values
+                    right -= 1
+                elif sum < target:# sum was too small; therfore to make sum closer to target add larger values
+                    left += 1
+                else:# the sum is euqal to taregt; therefore just return the target
+                    return target
+                temp = target - (sum)# the differecne between the target and the sum( the closer it's to zero; the coser the sum is to the target)
+                if abs(target - r) > abs(temp):# the temp difference closer to zero than the prevoius one; which means that there is a new closer 3 sum
+                    r = sum
+        return r
