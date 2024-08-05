@@ -1,0 +1,28 @@
+class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        answer = []
+        for i in range(0, len(nums) - 3):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue# skip duplicates since any starting value with the same value before it will have exactly the same pairs
+            for j in range(i + 1, len(nums) - 2):
+                # performing a basic two sum with the two pointer method
+                left = j + 1
+                right = len(nums) - 1
+                while left < right:
+                    sum = nums[i] + nums[j] + nums[left] + nums[right]
+                    if sum > target:
+                        right -= 1
+                    elif sum < target:
+                        left += 1
+                    else:
+                        # incase of trying to add pairs that already exist
+                        if [nums[i], nums[j], nums[left], nums[right]] not in answer:
+                            answer.append([nums[i], nums[j], nums[left], nums[right]])
+                        left += 1# the same starting value could have multiple pairs in it; to find them all increment left pointer
+        return answer
