@@ -1,0 +1,23 @@
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        answer = []# a list of all possible parenthesis
+
+        # use recursion
+        def generate(string, open, close):# keeps track of everything
+            if open == n and close == n:# this means that we have found a fully generated and valid comibation; add it to the answer list
+                answer.append(string)
+            elif open > close:# close can nver be greatee than open; or else combination is invalid
+
+                if open < n:# that means we can addd in a new open bracket
+                    generate(string + "(", open + 1, close)# add a new open bracket
+
+                # keep  adding in a closed bracket until close is equal to both open and n
+                generate(string + ")", open, close + 1)# add in a new close bracket
+            else:# open and close are equal but is not equal to n
+                 generate(string + "(", open + 1, close)# add in a new open; can't add in a close bracket as there is no open bracket for it to close( there would have been invalid)
+        generate("(", 1, 0)# all valid combinations starts off with "(", there is 1 open bracket; therefore open counter is one and close counter is zero
+        return answer
