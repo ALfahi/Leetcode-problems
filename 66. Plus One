@@ -1,0 +1,17 @@
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        digits[-1] = digits[-1] + 1# justr add one ot last element of list
+        if digits[-1] > 9:
+            i = -1# last element of list
+            while digits[i] > 9 and i > -(len(digits)):# doing backwards from back to front of list; therefore working wiht negative values for i
+                digits[i - 1] = digits[i - 1] + 1
+                digits[i] = 0
+                i -=1
+            if digits[0] > 9:# if very first value is 9
+                digits.insert(0, 1)# just add a one
+                digits[1] = 0
+        return digits
