@@ -1,0 +1,18 @@
+def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        # has to be recursive (can do iterative but more complex)
+        # give starting pos
+        dp = [([None] * n) for i in range(m)]# initialise a 2-d dp with None values
+       # try a bottle up approach
+        for j in range(m):
+            for i in range(n):
+                if i == 0 or j == 0:# only one way to reach the bottom right corner if in first column or first row
+                    dp[j][i] = 1
+                else:
+                    dp[j][i] = dp[j - 1][i] + dp[j][i - 1]# to get to everyother value needs to move to the right and down from current cell
+                    # (therefore from the next cell it's from either the left side or above it)
+        return dp[m - 1][n - 1]
