@@ -1,0 +1,15 @@
+class Solution(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        import math
+        # just use square root function in pyhton
+        answer = sqrt(x)
+        for i in range(len(str(answer))):
+            # look at the value right after the decimal point
+            if str(answer)[i] == ".":
+                if int(str(answer)[i + 1]) >= 5:# if it's 5 or greater then the round function will round up; so just take one away from answer
+                    return int(round(answer) - 1)
+                return int(round(answer))# otherwise just return the integer equivalent of answer
