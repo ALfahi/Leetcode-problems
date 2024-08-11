@@ -1,0 +1,14 @@
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # pointer variable points to the lement which will change if need to be
+        pointer = 2# first 2 items will never change e.g if it's the same; then there is max duplicates allowed and do nothing
+        # or they are unique; then just move on
+        for i in range(2, len(nums)):
+            if nums[pointer - 2] != nums[i]:# want to check if the valid elemts are equal or not
+                nums[pointer] = nums[i]
+                pointer +=1
+        return pointer
