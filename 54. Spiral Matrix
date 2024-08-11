@@ -1,0 +1,56 @@
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+
+        ## when going up always goes right
+        # when going down always goes left
+        # goes up or down when a row is empty
+
+        order = []
+        row = 0
+        while len(matrix) != 0:
+
+
+            while len(matrix[row]) != 0:# first go right
+                order.append(matrix[row].pop(0))
+            matrix.pop(row)# whenever going left or right; the row will always be fully empty; so just pop the entire empty row
+            if len(matrix) == 0:
+                break
+
+
+            # then go down
+            while row < len(matrix) - 1:
+                order.append(matrix[row].pop(-1))
+                if len(matrix[row]) == 0:# in case if the rows becomes empty when going down
+                    matrix.pop(row)
+                else:
+                    row +=1# when popping out the row in front of array; the one before becomes the 0th element which means no need
+                    #      to increment row; if the rows are nto empty then we need to manually go down the rows by incrementing the variable
+
+            # exit loop eary if matrix is empty( all elements have been discovered in the right order)
+            if len(matrix) == 0:
+                break
+
+
+            # then go left
+            while len(matrix[row]) != 0:
+                order.append(matrix[row].pop(-1))
+            matrix.pop(row)
+            row -= 1# want to make sure that the variable points to wards last row( when deleting a row from the back; the last pointer should decremtn by one)
+            if len(matrix) == 0:
+                break
+
+
+            # then go up
+            while row > 0:
+                order.append(matrix[row].pop(0))
+                if len(matrix[row]) == 0:
+                    matrix.pop(row)
+                row -=1# decrement row regardless as row is being popped off from the back of array(when it's empty)
+            if len(matrix) == 0:
+                break
+
+        return order
