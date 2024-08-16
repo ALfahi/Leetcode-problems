@@ -1,0 +1,21 @@
+class Solution(object):
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        answer = []# create an array to store answer; need to reverse this later
+        carry = 0# the carry bit
+        i = len(a) - 1
+        j = len(b) - 1
+        while i >= 0 or j >= 0 or carry > 0:# while there are still stuff to add to the answer:
+            if i >= 0:#  if there are still values left in the string a:
+                carry += int(a[i])
+                i -= 1
+            if j >= 0:# if there are still values left in string b:
+                carry += int(b[j])
+                j -= 1
+            answer.append(str(carry % 2))# e.g if carery is 1 or 3 then 1 is appended; otherwise 0 is appended
+            carry = carry // 2# easy way to make the carrry bit 1 or 0 as it makes carry 0 if it's below 2 and othwerise it's 1
+        return ''.join(reversed(answer))#  reverse the answer list so its in the correct orientation and join up all of the elements into one big string
