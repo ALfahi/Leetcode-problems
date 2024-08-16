@@ -1,0 +1,32 @@
+class Solution(object):
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        hash = {}
+        indexes = []
+        # first pass of just locating all the zeroes in  the matrix
+        for row in range(len(matrix)):
+            for col in range(len(matrix[row])):
+                if matrix[row][col] == 0:
+                    indexes.append([row, col])
+
+        # going through all of the cells with the zeroes located from list:
+
+        # indexes[i][0] is rows
+        # indexes[i][1] is columns
+        for i in range(len(indexes)):
+            row = indexes[i][0]
+            col = indexes[i][1]
+            # just check if this row has previously been filled up with zeroes before; if not then the key doesn't exist so we can fill everthing uup with zeroes
+            if hash.get("row:" + str(matrix[row][0])) == None:# needs to fill it all up with zeroes
+                hash[matrix[row][0]] = True# add the key to the hashtable, so that we don't need to do anymore unnecessary calculations e.g another zero exits in the same row.
+                for k in range(len(matrix[row])):# rows
+                    matrix[row][k] = 0
+             # just check if this column has previously been filled up with zeroes before; if not then the key doesn't exist so we can fill everthing uup with zeroes
+            if hash.get("col:" + str(matrix[0][col])) == None:# needs to fill it all up with zeroes
+                hash[matrix[0][col]] = True
+                for k in range(len(matrix)):# colums
+                    matrix[k][col] = 0
+            
