@@ -1,0 +1,21 @@
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        # use two pointers to check if string is a palindrome
+        front =  0
+        back = len (s) - 1
+        # if the back pointer is eqwual to front pointer or they pass by each other then the entire string has been looked and we can exit out of function
+        while front < back:
+            while front < back and s[front].isalnum() == False:# make sure that there is no index errors; if character is not a letter or number then go to next valid character
+                front +=1
+            while front < back and s[back].isalnum() == False:
+                back -= 1
+            if s[front].lower() == s[back].lower():# just check if they are equal; make them lowercase by default to not worry about upper case letters
+                front += 1
+                back -= 1
+            else:# if they are not the same then the string is not palindrome
+                return False
+        return True# string is palindrome if pointers overlapp or pass by each other and everything esle so far is correct
