@@ -1,0 +1,21 @@
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()
+        answer = []
+        def recursion(start, target, list = []):
+            if target == 0:# we found a valid combination
+                answer.append(list[:])# just append a copy of the current list to the final answer list
+                return
+            for i in range(start, len(candidates)):# try all possible combinations
+                if candidates[i] > target:# this will lead to an invlaid combination and the ones after will also lead to an invalid combination; so just exit out early 
+                    return
+                list.append(candidates[i])# append to working list
+                recursion(i, target - candidates[i], list)
+                list.pop()# backtrack to try other combinations
+        recursion(0, target, [])# call function
+        return answer# return answer
