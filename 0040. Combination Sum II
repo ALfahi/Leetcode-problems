@@ -1,0 +1,27 @@
+class Solution(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        candidates.sort()# sort the given arrray
+        answer = []# an array to keep trackof valid combinaations
+
+        # backtracking algorithm
+        def recursion(start, target, array = []):
+            if target == 0:# we found a valid combination
+                answer.append(array[:])
+                return
+            # don't need to consider when the values added up are smaller than target; as they will get popped out of call stack anyways by default
+            for i in range(start, len(candidates)):# try all combinations
+                if candidates[i] > target:# this means that every value after this( including this value) will have an invalid combination
+                    return# so just return
+                if i > start and candidates[i] == candidates[i - 1]:# don't want to addd duplicate elemtns into array( other than the starting value)
+                    # so just continue to next element( super efficient)
+                    continue
+                array.append(candidates[i])
+                recursion(i + 1, target - candidates[i], array )
+                array.pop(-1)# backtrack
+        recursion(0, target, [])
+        return answer
