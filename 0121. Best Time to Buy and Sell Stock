@@ -1,0 +1,20 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        profit = 0# intitliase profit variable
+
+        # use two pointer method
+        sell = len(prices) - 1
+        buy = len(prices) - 2
+        # going to work backwards through list; whenever the buying price is bigger than selling price we want sell pointer to point to buying price; as we want to maximise it's price
+        # this makes it so that we go through entire list only once
+        while buy >= 0:
+            if prices[sell] < prices[buy]:# if the buying price is bigger than selling price:
+                sell = buy
+            else:
+                profit = max(profit, prices[sell] - prices[buy])# calculate profit
+            buy -= 1# make it decrement until it reaches end of list
+        return profit
