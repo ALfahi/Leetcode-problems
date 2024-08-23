@@ -1,0 +1,48 @@
+class Solution(object):
+    def generateMatrix(self, n):
+        """
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        # number of rows = n
+        # number of columns = n
+
+        # initilise a matrix with None values to efficiently add values in later
+        matrix = [[None] * n for _ in range(n)]
+
+        # the different boundaries for the matrix, for each direction, one of the boundaries increase or decrease by 1 until it reaches centre
+        up = 0
+        down = n - 1
+        right = n - 1
+        left = 0
+
+        MAX = n * n
+        num = 1
+        while num <=  (MAX):
+            # go right
+            for i in range(left, right + 1):
+                matrix[up][i] = num
+                num += 1# increment to the next number
+            up += 1# this just makes it so that the agorithm won't reach the first row again as it's fully filled
+
+
+            # go down
+            for j in range(up, down + 1):
+                matrix[j][right] = num
+                num += 1
+            right -= 1# the most right column is now filled; so decrement so it can go to the next empty most right column
+
+
+            #  go left
+            for i in reversed(range(left, right + 1)):
+                matrix[down][i] = num
+                num += 1
+            down -= 1# bottom row fully filled; so go to the next most empty bottom row
+
+
+            # finally go up
+            for j in reversed(range(up, down + 1)):
+                matrix[j][left] = num
+                num += 1
+            left += 1# left column filled so then go to the next most left empty column
+        return matrix
