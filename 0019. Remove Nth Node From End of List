@@ -1,0 +1,39 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+
+        ### algorithm has a  time complexity of O(2n) (which is O(n)) as traversing through list twice.
+        dummy = ListNode(0)# start at a normal listNode to handle edge cases easily
+        dummy.next = head
+        current = dummy
+        counter = 0
+        length  = 0
+        # finding lengtht to calculate the correct node to skip from
+        while head != None:
+            length +=1
+            head = head.next
+        # caclulating which node to actually start to skip from:
+        index = length - n + 1
+        while current.next != None:
+            counter +=1
+            if counter == index:
+                # skip over the node
+                current.next = current.next.next# want to change the pointers not the actual nodes; change the "next" part to skip nodes
+                break# rest of list is the same so just exit out early
+            else:
+                current = current.next# otherwise just continue on as normal
+        return dummy.next
+
+            
+
+        
+
