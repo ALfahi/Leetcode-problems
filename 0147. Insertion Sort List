@@ -1,0 +1,40 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        l1 = []
+        answer = head
+        current = answer
+        # put values into a list so they can be sorted
+        while head != None:
+            l1.append(head.val)
+            head = head.next
+
+        # perform insertion sort on the list
+        def insertion(l1):
+            for i in range(1, len(l1)):
+                position = i
+                current = l1[i]
+                while position >0 and (l1[position - 1] > current):
+                    l1[position] = l1[position -1]
+                    position -= 1
+                l1[position] = current
+
+        insertion(l1)# call the function
+
+
+        ##### can just sort list normally which has time coplexity O(logn) compared to insertion's O(n^2) but question calls for insertion sort
+        # l1.sort()      ### (this sorting method cuts down time dramatically to just around 30ms)
+
+        # go back into list and change the values
+        while current != None:
+            current.val = l1.pop(0)
+            current = current.next
+        return answer
