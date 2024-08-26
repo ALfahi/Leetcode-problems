@@ -1,0 +1,23 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # need to check head != None for the edge case e/g when linked list is empty
+        if head == None:
+            return head
+        answer = head
+
+        # nned to check if the pointer is null; if it is then it means that entire linked list has been traversed and we stop here
+        while head.next != None:
+            if head.val == head.next.val:# if the two nodes have the same value; skip the next node
+                head.next = head.next.next# important to not increment the current node we are on until all duplicates of current nodes has been skipped
+            else:# finally when a distinct value has been found; increment and move onto next node
+                head = head.next
+        return answer
