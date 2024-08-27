@@ -1,0 +1,38 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseBetween(self, head, left, right):
+        """
+        :type head: ListNode
+        :type left: int
+        :type right: int
+        :rtype: ListNode
+        """
+        if left == right:# exit early if left pointer and right pointer are equal as no changes will be made
+            return head
+        ###  O(n)  algorithm by going through linked list twice
+        l1 = []# an array to store all of the values which needs to be reversed
+        pos = 1
+        answer = head
+        current = answer
+        # iterate through linked list once to just append all values which needs to be swapped into the array
+        while head != None:
+            if pos >= left and pos <= right:
+                l1.append(head.val)
+            head = head.next
+            pos += 1
+        l1.reverse()# reverse the array
+        pos = 1# reset counter
+
+        # iterate through linked list one more time to make the changes to the linked list and return it
+        while current != None:
+            if pos >= left and pos <= right:
+                current.val = l1.pop(0)
+            if pos > right:# rest of linked list will be unchanged so exit out eary
+                return answer
+            current = current.next
+            pos += 1
+        return answer# in case of when right pointer is at the very end of linked list
