@@ -1,0 +1,26 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        # we are going to use the hare and tortoise algorithm to solve this problem
+        fast = head
+        # therefore the head is the slow pointer
+
+        # in a cycle we will never reach the end of the linked list; therefore will never get None. If we reach end of list; it means that there is no cyles
+        # we are going to have two pointers; a "slow" pointer and a "fast" pointer where slow increments by one node each time and fast increments by 2.
+        # in a cycle the fast pointer is going to overlap with the slow pointer the next time it goees around at the start of the cycle (the distance between the two pointers decrese by one in each iteration)
+        # if it's not a cycle the fast pointer will reach end of list before slow pointer and we exit out of loop
+        while fast != None and fast.next != None:
+            head = head.next# increments by 1
+            fast = fast.next.next# increments by 2
+            if head == fast:# the overlapped; therefore there is a cycle
+                return True
+        return False# the fast pointer reached the end of the list which means that there is no cycle
