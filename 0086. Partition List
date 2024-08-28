@@ -1,0 +1,31 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def partition(self, head, x):
+        """
+        :type head: ListNode
+        :type x: int
+        :rtype: ListNode
+        """
+        ###### create two linked lists and link them up at the end
+
+        # use dummy nodes to initialise the lists
+        small  = ListNode()# a linked list to store all values less than x into it
+        scur = small
+        large = ListNode()# a linked list to store the rest of the values into it; keeps the order the same
+        lcur = large
+        while head:
+            if head.val < x:# if the value is smaller than x then just add it to the small linked list
+                # importasnt to do scur.next = head instead of scur = head
+                scur.next = head
+                scur = scur.next
+            else:# otherwise add it to the large linked list( this method also keeps the order of the larger numbers i.e larger numbers found first will be before the actual x value)
+                lcur.next = head
+                lcur = lcur.next
+            head = head.next
+        scur.next = large.next# link the two lists together( we link to large.next to skip the dummy node)
+        lcur.next = None# stops a cycle
+        return small.next
