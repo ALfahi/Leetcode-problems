@@ -4,6 +4,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        ### a recursvie algorithmatic appraoch
         nums.sort()# sort the numbers to avoid duplicates
         answer = []
         def recursion(current, start):# the  starting point is needed to avoid duplicates by always going up from the previous element that was appended
@@ -18,7 +19,14 @@ class Solution(object):
                     current.pop()# backtrack
         recursion([], -1)# starting point needs to be set to -1; so that the indivisual elements can also be a apart of the answer array
         return answer
-            
+
+        ##### an approach using built in functions:
+
+        from itertools import combinations
+        answer = []
+        for i in range(0, len(nums) + 1):
+            answer.extend(itertools.combinations(nums, i))# the i part just determines of how long the length of the array can be
+        return answer
 
 
             
