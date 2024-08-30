@@ -1,0 +1,24 @@
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()# sort the numbers to avoid duplicates
+        answer = []
+        def recursion(current, start):# the  starting point is needed to avoid duplicates by always going up from the previous element that was appended
+            answer.append(current[:])# append current state of array to the answer array
+            if len(current) == len(nums):# we have found the rest of the sets
+                return
+            if start == len(nums) - 1:# in this case we cannot go any further as we have exaughsted this possible branch; so just exit early
+                return
+            for i in range(start + 1, len(nums)):# to avoid duplicates needs to start at the next element than the one before
+                    current.append(nums[i])
+                    recursion(current, i)# recursive call
+                    current.pop()# backtrack
+        recursion([], -1)# starting point needs to be set to -1; so that the indivisual elements can also be a apart of the answer array
+        return answer
+            
+
+
+            
