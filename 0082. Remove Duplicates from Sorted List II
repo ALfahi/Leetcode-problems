@@ -1,0 +1,27 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        answer = ListNode()# use a dummy node in case if the first nodes are duplicates
+        answer.next = head# make it equal to the head
+        current = answer.next
+        prev = answer# this pointer will help to skip over duplicate nodes
+        while current != None:
+            if current.next != None and current.val == current.next.val:# while the two nodes are the same and the end of list hasn't been reached
+                while current.next != None and current.val == current.next.val:# keep going until an unique value has been found
+                    current = current.next
+                prev.next = current.next# mkae the pointer equal to the next pointer where a new value starts( in case of duplicate values next to each other; this pointer gets overidden)
+            else:# just increment the pointers
+                prev = prev.next
+            current = current.next
+        return answer.next
+                
+
+                
