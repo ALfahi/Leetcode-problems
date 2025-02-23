@@ -1,0 +1,42 @@
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # expand around center solution:
+        maxLength = 0
+        answer = ""
+        tempLength = 0
+        # go towards each character and expand outwards and check if it's a palindrome
+        for i in range(0, len(s)):
+            # odd palindrome case
+            temp = s[i]
+            left = i - 1
+            right = i + 1
+            tempLength = 1;
+            while (left >= 0 and right < len(s) and s[left] == s[right]):
+                tempLength += 2
+                temp = s[left] + temp + s[right]
+                left -=1
+                right += 1
+            
+            if (tempLength > maxLength):
+                answer = temp
+                maxLength = tempLength
+            
+            # now do even: start at i and go right, no need to check left as it would have been covered by previous iteration.
+            temp = ""
+            tempLength = 0
+            left = i
+            right = i + 1
+            while (left >= 0 and right < len(s) and s[left] == s[right]):
+                tempLength += 2
+                temp = s[left] + temp + s[right]
+                left -=1
+                right += 1
+            
+            if (tempLength > maxLength):
+                answer = temp
+                maxLength = tempLength
+        return answer
