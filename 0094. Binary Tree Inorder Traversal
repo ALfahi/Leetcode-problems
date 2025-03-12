@@ -1,0 +1,44 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[int]
+        """
+        # use DFS to solve problem
+        stack = []
+        ret = []
+    
+
+        # when entering algorithm assume that the stack is always not empty
+        def depthFirst(stack, ret):
+            current = stack.pop()
+            if ((current.left == None) and (current.right == None)):
+
+                ret.append(current.val)
+                return ret
+
+            if (current.left != None):
+                stack.append(current.left)
+                ret = depthFirst(stack, ret)
+            
+
+            ret.append(current.val)
+
+            if (current.right!= None):
+                
+                    stack.append(current.right)
+                    ret = depthFirst(stack, ret)
+                
+
+            return ret
+        if (root == None):
+            return ret
+        
+        stack.append(root)
+        return depthFirst(stack, ret)
