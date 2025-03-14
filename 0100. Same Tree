@@ -1,0 +1,38 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isSameTree(self, p, q):
+        """
+        :type p: Optional[TreeNode]
+        :type q: Optional[TreeNode]
+        :rtype: bool
+        """
+        
+        if (p == None or q == None):# one of the classes is empty but the other is not:
+            if (p != None or q != None):
+                return False
+            return True
+            
+        stackP = [p]
+        stackQ = [q]
+
+        while (len(stackP) > 0 and len(stackQ) > 0):
+            currentP = stackP.pop()
+            currentQ = stackQ.pop()
+            if (currentP == None and currentQ == None):# they both reached a leaf node.
+                continue
+            if (currentP.val != currentQ.val):
+                return False
+            if( (currentP.left and currentQ.left == None) or  (currentP.right and currentQ.right == None)# if one can continue in a direction, but the other cannot: tree is not the same.
+             or  (currentQ.left and currentP.left == None) or  (currentQ.right and currentP.right == None)):
+                return False
+            stackP.append(currentP.left)
+            stackP.append(currentP.right)
+            stackQ.append(currentQ.left)
+            stackQ.append(currentQ.right)
+        return len(stackP) == len(stackQ)
+                
