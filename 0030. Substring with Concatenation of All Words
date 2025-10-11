@@ -1,0 +1,70 @@
+class Solution(object):
+    def findSubstring(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: List[int]
+        """
+
+        if not s or not words:
+            return []
+
+        wordLength = len(words[0])
+        totalWords = len(words)
+        totalLength = wordLength * totalWords# total length of our window
+        result = []
+
+        if totalLength > len(s):
+            return result
+
+        # Build word frequency map
+        potentialWords = self.getAllPossibleWords(words)
+
+        # Slide with different starting offsets to catch all possibilities e.g. "aaaaaaaaa", ["aa", "aa"]
+        # will be caught (and then we increment by each word length for efficiency.)
+        for offset in range(wordLength):
+            windowStart = offset
+            currCount = {}
+            countWordsInWindow = 0  # Number of valid words in current window
+
+            for i in range(offset, len(s) - wordLength + 1, wordLength):#increment by each word length
+                currentWord = s[i:i + wordLength]
+
+                # If word is valid
+                if currentWord in potentialWords:
+                    currCount[currentWord] = currCount.get(currentWord, 0) + 1
+                    countWordsInWindow += 1
+
+                    # If there are too many duplicates, shrink from left (e.g. just move slider up)
+                    while currCount[currentWord] > potentialWords[currentWord]:
+                        leftWord = s[windowStart:windowStart + wordLength]
+                        currCount[leftWord] -= 1
+                        countWordsInWindow -= 1
+                        windowStart += wordLength
+
+                    # If window currently holds a correct complete permuation:
+                    if countWordsInWindow == totalWords:
+                        result.append(windowStart)
+                        # Move window forward by one word to continue
+                        leftWord = s[windowStart:windowStart + wordLength]
+                        currCount[leftWord] -= 1
+                        countWordsInWindow -= 1
+                        windowStart += wordLength
+
+                else:
+                    # Reset everything if invalid word
+                    currCount.clear()
+                    countWordsInWindow = 0
+                    windowStart = i + wordLength
+
+        return result
+
+    # function to create a hashmap of all words and their counters
+    def getAllPossibleWords(self, words):
+        hashmap = {}
+        for word in words:
+            if word in hashmap:
+                hashmap[word] += 1
+            else:
+                hashmap[word] = 1
+        return hashmap
