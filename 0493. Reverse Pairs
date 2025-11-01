@@ -1,0 +1,59 @@
+class Solution(object):
+    def reversePairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return self.mergeSort(nums)
+
+    def mergeCount(self, h1, h2):
+        count = 0
+        j = 0
+        for i in range(len(h1)):
+            while j < len(h2) and h1[i] > 2 * h2[j]:
+                j +=1
+            count += j
+        print(count)
+        return count
+    
+    #merge sort part #########
+
+    def merge(self, h1, h2, A):
+        i = 0; j= 0; k= 0
+        count = self.mergeCount(h1, h2)
+
+        
+        while i < len(h1) and j < len(h2):
+            if h1[i] < h2[j]:
+                A[k] = h1[i]
+                i+=1
+            else:
+                A[k] = h2[j]
+                j+=1
+            k+=1
+        
+        
+        while i < len(h1) and k < len(A):
+            # if at this point 
+            A[k]= h1[i]
+            i+=1
+            k+=1
+            
+        while j < len(h2)and k < len(A):
+            A[k]= h2[j]
+            j+=1
+            k+=1
+        return count
+
+    #WE CAN IMPROVE EFFICIENCY BY DOING IN PLACE MERGE SORT VIA POINTERS.
+    def mergeSort(self, A):
+        if (len(A)<=1):
+            return 0
+
+        mid = len(A)//2
+        left = A[:mid]
+        right = A[mid:]
+        countLeft = self.mergeSort(left)
+        countRight = self.mergeSort(right)
+        countMerged  = self.merge(left, right, A)
+        return countLeft + countRight + countMerged
