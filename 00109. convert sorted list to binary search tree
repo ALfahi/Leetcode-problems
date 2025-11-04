@@ -1,0 +1,85 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# create a BST class to easily complete problem
+class BST():
+    def __init__(self):
+        self.root = None
+
+    # function to add in a new node in the correct order
+    def add(self, val):
+        if (self.root is None):
+            self.root = TreeNode(val)
+        else:
+            curr = self.root
+            # traverse tree
+            while (curr.left is not None and val < curr.val) or (curr.right is not None and val >= curr.val):
+                if curr.val < val:
+                    curr = curr.right
+                else:
+                    curr = curr.left
+            # add in  new node
+            if (curr.val > val):
+                curr.left = TreeNode(val)
+            else:
+                curr.right = TreeNode(val)
+    
+    # function to get the root of the tree
+    def getRoot(self):
+        return self.root
+
+            
+
+
+# Array based solution.
+class Solution(object):
+    def sortedListToBST(self, head):
+        """
+        :type head: Optional[ListNode]
+        :rtype: Optional[TreeNode]
+        """
+        array = self.convertToArray(head)
+        tree = BST()
+        self.appendValToTree(tree, 0, len(array) - 1, array)
+        return tree.getRoot()
+
+
+
+
+        #algorithm: split linked list into half each time (lef + mid + right):
+        #then just make BST append middle value
+        # recursivley split and append middle value of all linked lists where size > 1
+
+        #attempt with array to start off from
+
+    # convert Linked List to an array
+    def convertToArray(self, head):
+        a = []
+        curr = head
+        while curr != None:
+            a.append(curr.val)
+            curr = curr.next
+        print(a)
+        return a
+
+    # recursive call to append the middle of the current list to the tree
+    def appendValToTree(self, tree, start, end, array):
+        if start > end:
+            return
+        else:
+            mid = (start + end) // 2
+            tree.add(array[mid])
+            self.appendValToTree(tree, mid + 1, end, array)
+            self.appendValToTree(tree, start, mid - 1, array)
+
+    
+        
