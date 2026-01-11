@@ -1,0 +1,76 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: bool
+        """
+       # for every node
+       # find max node in left sub tree
+       # find min node in right sub tree
+       # compare if it's all correct
+       # work our way back up to the root
+        return self.isValidAux(root, {})
+
+    def isValidAux(self, node, memo):
+        if node is None:
+            return True  # empty subtree is valid
+
+        # Recursively check left and right subtrees
+        leftValid = self.isValidAux(node.left, memo)
+        rightValid = self.isValidAux(node.right, memo)
+
+        # Get min/max nodes for left and right subtrees
+        left = self.getMinMaxNodes(node.left, memo)
+        right = self.getMinMaxNodes(node.right, memo)
+
+        
+
+        # Comparison for current node (fill in your logic)
+        valid = True
+        if left[1] and right[0]:
+            valid = left[1].val < node.val < right[0].val
+        elif left[1]:
+            valid = left[1].val < node.val
+        elif right[0]:
+            valid = node.val < right[0].val
+
+        # Combine recursive checks with current node check
+        return leftValid and rightValid and valid
+
+    def getMinNode(self, node1, node2, node3):
+        nodes = [n for n in [node1, node2, node3] if n is not None]
+        if not nodes:
+            return None
+        min_node = nodes[0]
+        for n in nodes[1:]:
+            if n.val < min_node.val:
+                min_node = n
+        return min_node
+
+    def getMaxNode(self, node1, node2, node3):
+        nodes = [n for n in [node1, node2, node3] if n is not None]
+        if not nodes:
+            return None
+        max_node = nodes[0]
+        for n in nodes[1:]:
+            if n.val > max_node.val:
+                max_node = n
+        return max_node
+
+    def getMinMaxNodes(self, node, memo):
+        if node is None:
+            return (None, None)# returns (min, max)
+        if node in memo:
+            return memo[node]
+        left = self.getMinMaxNodes(node.left, memo)
+        right = self.getMinMaxNodes(node.right, memo)
+        subTreeMin = self.getMinNode(node, left[0], right[0])
+        subTreeMax = self.getMaxNode(node, left[1], right[1])
+        memo[node] = (subTreeMin, subTreeMax)
+        return memo[node]
