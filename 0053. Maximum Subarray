@@ -1,0 +1,15 @@
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        maxTotal = float('-inf')
+        currTotal = 0
+        for right in range(len(nums)):
+            currTotal += nums[right]
+            maxTotal = max(currTotal, maxTotal)
+
+            if currTotal < 0:
+                currTotal = 0
+        return maxTotal
