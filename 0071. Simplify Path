@@ -1,0 +1,23 @@
+class Solution(object):
+    def simplifyPath(self, path):
+        """
+        :type path: str
+        :rtype: str
+        """
+        
+        segments = path.split('/')
+        stack = []
+        for segment in segments:
+            if segment == "." or segment == "":# we need to ignore these:
+                continue
+            if segment == "..":
+                if len(stack) > 0:
+                    stack.pop()
+            else:
+                stack.append(segment)
+        if len(stack) <=0:
+            return '/'
+        validPath = ""
+        for i in range(len(stack)):
+            validPath += '/' + stack[i]
+        return validPath
