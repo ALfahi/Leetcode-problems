@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
+        if root is None:
+            return 0
+        H = []
+        currH = [0]
+        self.preOrder(root, currH, H)
+        print(H)
+        iMin = float('inf')
+        for i in range(len(H)):
+            if H[i] < iMin:
+                iMin = H[i]
+        return iMin + 1
+        
+    def preOrder(self, node, currH, H):
+        if not node.left and not node.right:
+            H.append(currH[0])
+            currH[0] -=1
+            return
+        if node.left:
+            currH[0] +=1
+            self.preOrder(node.left, currH, H)
+        if node.right:
+            currH[0] +=1
+            self.preOrder(node.right, currH, H)
+        currH[0] -=1
+        return
+        
+
