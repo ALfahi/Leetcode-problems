@@ -1,0 +1,22 @@
+class Solution(object):
+    def getRow(self, rowIndex):
+        """
+        :type rowIndex: int
+        :rtype: List[int]
+        """
+        memo = [1]
+        result = []
+        for i in range(0, rowIndex):
+            result.append(self.factorial(rowIndex, memo)/ (self.factorial(i, memo) * self.factorial(rowIndex - i, memo)))
+        result.append(1)
+        return result
+       
+    def factorial(self, n, memo):
+        # we only addd new elements to our memo when its not already inside the memo
+        if n == 0:
+            return 1
+        if n  > len(memo):
+            lastIndex = len(memo) - 1
+            for i in range(lastIndex, n - 1):# add in the other in between elements up to n
+                memo.append(memo[-1] * (len(memo) + 1) )
+        return memo[n-1]
