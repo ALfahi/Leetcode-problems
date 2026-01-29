@@ -1,0 +1,34 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: Optional[TreeNode]
+        """
+        return self.buildAux(preorder, 0, len(preorder) -1, inorder, 0, len(inorder) - 1)
+    
+    def buildAux(self, preorder, plo, phi, inorder, ilo, ihi):
+        if plo > phi or ilo > ihi:
+            return None
+        val = preorder[plo]
+        index = self.linearSearch(inorder, val, ilo, ihi)
+        left = index - ilo
+        node = TreeNode(val)
+        #prev solution used slicing, converting to a pointer based approach for more efficiency.
+        #node.left = self.buildAux(preorder[1: index + 1], inorder[: index])
+        #node.right = self.buildAux(preorder[index + 1:], inorder[index + 1:])
+        node.left = self.buildAux(preorder, plo + 1, plo + left, inorder, ilo, index - 1)
+        node.right = self.buildAux(preorder, plo + left + 1, phi, inorder, index + 1, ihi)
+        return node
+    
+    def linearSearch(self, A, v, lo, hi):
+        for i in range(lo, hi + 1):
+            if A[i] == v:
+                return i
+        return -1
