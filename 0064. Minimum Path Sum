@@ -1,0 +1,22 @@
+class Solution(object):
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+      
+        return self.minPathAux(grid, 0, 0, len(grid), len(grid[0]), {})
+        
+    def minPathAux(self, grid, i, j, m, n, memo):
+        if (i, j) in memo:
+            return memo[(i, j)]
+        if i == m - 1  and j == n - 1:
+            return grid[i][j]
+        
+        res = float('inf')
+        if i < m - 1:
+            res = min(res, grid[i][j] + self.minPathAux(grid, i + 1, j, m, n, memo))
+        if j < n -1:
+            res = min(res, grid[i][j] + self.minPathAux(grid, i, j + 1, m, n, memo))
+        memo[(i, j)]= res
+        return memo[(i, j)]
