@@ -36,3 +36,74 @@ class Solution(object):
             current = current.next
             pos += 1
         return answer# in case of when right pointer is at the very end of linked list
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################### Faster solution with only one pass #####################################
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseBetween(self, head, left, right):
+        """
+        :type head: ListNode
+        :type left: int
+        :type right: int
+        :rtype: ListNode
+        """
+        if left == right:
+            return head
+
+        # dummy node handles edge case where left == 1
+        dummy = ListNode(0)
+        dummy.next = head
+
+        ptr1 = dummy
+        count = 1
+
+        # move ptr1 to node BEFORE reversal starts
+        while count < left:
+            ptr1 = ptr1.next
+            count += 1
+
+        startNoneR = ptr1      # node before reversed section
+        startR = ptr1.next     # first node in reversed section
+
+        ptr1 = startR
+        ptr2 = ptr1.next
+
+        count = left + 1
+
+        # reverse section
+        while count <= right:
+            nxt = ptr2.next
+            ptr2.next = ptr1
+
+            ptr1 = ptr2
+            ptr2 = nxt
+
+            count += 1
+
+        # reconnect list
+        startNoneR.next = ptr1
+        startR.next = ptr2
+
+        return dummy.next
