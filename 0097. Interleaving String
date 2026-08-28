@@ -1,0 +1,35 @@
+class Solution(object):
+    def isInterleave(self, s1, s2, s3):
+        """
+        :type s1: str
+        :type s2: str
+        :type s3: str
+        :rtype: bool
+        """
+
+        return self.isInterleaveAux(s1, s2, s3, {})
+
+    def isInterleaveAux(self, s1, s2, s3, memo):
+        if (s1, s2) in memo:
+            return memo[(s1, s2)]
+        # used for when none s1[0] and s2[0] don't match with s3[0], hence
+        # we can just exit early out of this specific branch
+        left = False
+        right = False
+        if (len(s3) == 0 and len(s1) == 0 and len(s2) == 0):
+        #solution is correct when s1, s2, and s3 are all empty since it means
+        # that all the characters from s1 and s2 were used to form s3 without
+        # any left overs.
+            return True
+        if (len(s1) > 0 and len(s3) > 0 and s3[0] == s1[0]):# pick from s1 first
+            left = self.isInterleaveAux(s1[1:], s2, s3[1:], memo)
+        if (len(s2) > 0 and len(s3) > 0 and s3[0] == s2[0]):# pick from s2 first
+            right = self.isInterleaveAux(s1, s2[1:], s3[1:], memo)
+        
+        memo[(s1, s2)] =  left | right# either they don't match, or one of the branches
+        # resulted in correct result
+        return left | right
+        
+
+    
+        
