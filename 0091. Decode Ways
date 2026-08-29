@@ -1,0 +1,57 @@
+class Solution(object):
+    def numDecodings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if len(s) == 0:
+            return 0
+        # if s is empty, return 0 here
+        codeMap = {
+            '1': 'A',
+            '2': 'B',
+            '3': 'C',
+            '4': 'D',
+            '5': 'E',
+            '6': 'F',
+            '7': 'G',
+            '8': 'H',
+            '9': 'I',
+            '10': 'J',
+            '11': 'K',
+            '12': 'L',
+            '13': 'M',
+            '14': 'N',
+            '15': 'O',
+            '16': 'P',
+            '17': 'Q',
+            '18': 'R',
+            '19': 'S',
+            '20': 'T',
+            '21': 'U',
+            '22': 'V',
+            '23': 'W',
+            '24': 'X',
+            '25': 'Y',
+            '26': 'Z',
+        }
+
+        def decodeAux(code, memo):
+            if code in memo:
+                return memo[code]
+            take1 = 0
+            take2 = 0
+            if len(code) == 0:
+                return 1
+            # at each point since the digits are 1-2 digits long, we can either take 1 digit or 2:
+            if code[0] in codeMap:
+                take1 = decodeAux(code[1:], memo)
+            if (len(code) > 1 and (code[0] + code[1]) in codeMap):
+                take2 = decodeAux(code[2:], memo)
+            # current val does not fit in codeMap
+            memo[code] =  take1 + take2
+            return memo[code]
+        
+        return decodeAux(s, {})
+
+
