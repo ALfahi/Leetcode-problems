@@ -1,0 +1,36 @@
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val=0, left=None, right=None, next=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+from collections import deque
+class Solution(object):
+    def connect(self, root):
+        """
+        :type root: Node
+        :rtype: Node
+        """
+        if root is None:
+            return None
+        level = 1#this will increase by *2 for every level (how many elements are inside each level)
+        currLevel = level
+        queue = deque()
+        queue.append(root)
+        while len(queue) > 0:
+            node = queue.pop()
+            currLevel -=1
+            if currLevel == 0:# reached end of this level, hence node's nex must be null
+                level = level * 2
+                currLevel = level
+                node.next = None
+            else:
+                node.next = queue[-1]# peek at the right most element in queue (next to get popped)
+            if (node.left is not None):# since the binary trees are perfect, we only need to check the existence of one child
+                queue.appendleft(node.left)
+                queue.appendleft(node.right)
+        return root
