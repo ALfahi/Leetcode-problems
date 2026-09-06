@@ -1,0 +1,55 @@
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        # go through array and then check if current element overlaps with the new interval,
+        #if it overlaps, make current element the new interval (take lower of the 2 starts, and higher of the 2 ends), set the flag of merged to be true, then check if it continues to overlap, if it still does then this time the last element of our new array get's updated again, and then append the rest when it all works out or something (or do it in place)
+        if len(intervals) == 0 and len(newInterval) > 0:# if intervals is empty, just return the newInterval (assuming that it is also not empty)
+            return [newInterval]
+        if len(newInterval) < 2:
+            return intervals
+
+        answer = []
+        mergedAlready = False
+        newIntervalInserted = False# check if the new interval has been inserted (used when the new interval is at the end)
+        def checkOverlap(newInterval, currInterval):
+                return newInterval[0] <= currInterval[1] and currInterval[0] <= newInterval[1]
+        
+        def merge(newInterval, currInterval):
+            val = []
+            val.append(min(newInterval[0], currInterval[0]))
+            val.append(max(newInterval[1], currInterval[1]))
+            return val
+        
+
+
+        for i in range(len(intervals)):
+            if (not mergedAlready):# we need to check the base interval instead of last element:
+                if (checkOverlap(newInterval, intervals[i])):
+                    answer.append(merge(newInterval, intervals[i]))
+                    mergedAlready = True
+                    continue
+                else:
+                    if (newInterval[0] < intervals[i][0]):# if we pass by the array without overlapping with the new interval, it means that it will never overlap, and so we can insert the new interval and the rest of the list all in one go
+                        newIntervalInserted = True
+                        answer.append(newInterval)
+                        answer.extend(intervals[i:])
+                        break
+                    answer.append(intervals[i])
+            else:# already merged
+                if (checkOverlap(answer[-1], intervals[i])):
+                    answer[-1] = merge(answer[-1], intervals[i])
+                    continue
+                else:# no longer merges, just extend the array
+                    answer.extend(intervals[i:])
+                    break
+        if not mergedAlready and not newIntervalInserted:
+            answer.append(newInterval)
+        return answer
+    
+
+
+        
