@@ -1,0 +1,28 @@
+class Solution(object):
+    def minimumTotal(self, triangle):
+        """
+        :type triangle: List[List[int]]
+        :rtype: int
+        """
+        return self.minimumTotalAux(triangle, 0, 0, {})
+        
+    def minimumTotalAux(self, triangle, row, col, memo):
+        if (row, col) in memo:
+            return memo[(row, col)]
+            
+        total = triangle[row][col]
+        if row == len(triangle) - 1:
+            memo[(row, col)]=  total
+        else:# we have more rows to iterate towards
+            mid = sys.maxsize
+            right = sys.maxsize
+          
+            
+            if (col) >= 0 and (col) < len(triangle[row + 1]):
+                mid = self.minimumTotalAux(triangle, row + 1, col, memo)
+            
+            if (col + 1) >= 0 and (col + 1) < len(triangle[row + 1]):
+                right = self.minimumTotalAux(triangle, row + 1, col +1, memo)
+            
+            memo[(row, col)] = total + min(right, mid)
+        return memo[(row, col)]
