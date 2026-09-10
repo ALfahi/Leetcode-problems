@@ -1,0 +1,68 @@
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        
+        def validRows(board):
+            for row in range(9):
+                vals = {}
+                for col in range(9):
+                    val = board[row][col]
+                    if val in vals:
+                        return False
+                    elif val.isdigit():
+                            vals[val] = ""
+            return True
+
+        def validColumns(board):
+            for col in range(9):
+                vals = {}
+                for row in range(9):
+                    val = board[row][col]
+                    if val in vals:
+                        return False
+                    elif val.isdigit():
+                            vals[val] = ""
+            return True
+                    
+
+        def validSquares(board):# valid subsquares
+            # our subsquares
+            for i in range(3):
+                vals = {}
+                row = i * 3# which row the subsquare starts
+
+                #subsquare 1
+                for j in range(row, row + 3):# counting all of the values 
+                    for col in range(0, 3):
+                        val = board[j][col]
+                        if val in vals:
+                            return False
+                        elif val.isdigit():
+                            vals[val] = ""
+                
+                vals = {}
+
+                #subsquare2
+                for j in range(row, row + 3):
+                    for col in range (3, 6):
+                        val = board[j][col]
+                        if val in vals:
+                            return False
+                        elif val.isdigit():
+                            vals[val] = ""
+                
+                vals = {}
+                #subsquare3
+                for j in range(row, row + 3):
+                    for col in range(6, 9):
+                        val = board[j][col]
+                        if val in vals:
+                            return False
+                        elif val.isdigit():
+                            vals[val] = ""
+            return True
+
+        return validRows(board) and validColumns(board) and validSquares(board)
