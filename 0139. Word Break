@@ -1,0 +1,27 @@
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        # go through s, test to see if next word is inside dict, if there is multiple, use a while loop and go through them, if any one of them is true, return
+        return self.wordBreakAux(s, 0, wordDict, 0, {})
+
+    def wordBreakAux(self, s, start, wordDict, wstart, memo):
+        if start in memo:
+            return memo[start]
+        if start >= len(s):
+            memo[start] = True
+            return memo[start]
+
+      
+        memo[start] = False
+        for wstart in range(len(wordDict)):
+            end = len(wordDict[wstart]) + start
+            if end <= len(s)  and wordDict[wstart] == s[start: end]:
+                if self.wordBreakAux(s, end, wordDict, 0, memo):
+                    memo[start] = True
+        return memo[start] 
+
+            
